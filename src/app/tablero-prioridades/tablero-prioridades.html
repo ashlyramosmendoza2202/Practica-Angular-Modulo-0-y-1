@@ -1,0 +1,132 @@
+
+<section class="tablero" aria-labelledby="titulo-tablero">
+  <h2 id="titulo-tablero">Tablero de prioridades</h2>
+
+  <section class="resumen" aria-label="Resumen de actividades">
+    <ul class="metricas">
+      <li><span>Total</span><strong>{{ total() }}</strong></li>
+      <li><span>Pendientes</span><strong>{{ pendientes() }}</strong></li>
+      <li><span>En progreso</span><strong>{{ enProgreso() }}</strong></li>
+      <li><span>Completadas</span><strong>{{ completadas() }}</strong></li>
+      <li><span>Destacadas</span><strong>{{ destacadas() }}</strong></li>
+    </ul>
+  </section>
+
+  <section class="controles" aria-label="Filtros de actividades">
+    <label class="campo">
+      Buscar actividad
+      <input
+        type="search"
+        placeholder="Escribe un título..."
+        [value]="busqueda()"
+        (input)="cambiarBusqueda($any($event.target).value)"
+      />
+    </label>
+
+    <label class="campo">
+      Filtrar por estado
+      <select
+        [value]="filtroEstado()"
+        (change)="cambiarEstadoFiltro($any($event.target).value)"
+      >
+        <option value="todas">Todos los estados</option>
+        <option value="pendiente">Pendiente</option>
+        <option value="en_progreso">En progreso</option>
+        <option value="completada">Completada</option>
+      </select>
+    </label>
+
+    <label class="campo">
+      Filtrar por prioridad
+      <select
+        [value]="filtroPrioridad()"
+        (change)="cambiarPrioridadFiltro($any($event.target).value)"
+      >
+        <option value="todas">Todas las prioridades</option>
+        <option value="alta">Alta</option>
+        <option value="media">Media</option>
+        <option value="baja">Baja</option>
+      </select>
+    </label>
+
+    <button type="button" (click)="reiniciar()">Reiniciar tablero</button>
+  </section>
+
+  <p aria-live="polite">
+    Mostrando {{ actividadesFiltradas().length }} de {{ total() }} actividades.
+  </p>
+
+  <section aria-labelledby="titulo-actividades">
+    <h3 id="titulo-actividades">Actividades</h3>
+
+    <ul class="lista">
+      @for (actividad of actividadesFiltradas(); track actividad.id) {
+        <li>
+          <article
+            class="tarjeta"
+            [class.destacada]="actividad.destacada"
+            [class.seleccionada]="seleccionadaId() === actividad.id"
+          >
+            <h4>{{ actividad.titulo }}</h4>
+
+            <p class="prioridad prioridad-{{ actividad.prioridad }}">
+              Prioridad: {{ actividad.prioridad }}
+            </p>
+
+            <p class="estado">Estado: {{ actividad.estado }}</p>
+            <p>Creada: {{ actividad.creadaEn }}</p>
+            <p>{{ actividad.destacada ? 'Actividad destacada' : 'Actividad normal' }}</p>
+
+            <div class="acciones">
+              <button
+                type="button"
+                (click)="seleccionar(actividad.id)"
+                [attr.aria-pressed]="seleccionadaId() === actividad.id"
+              >
+                Seleccionar
+              </button>
+
+              <button
+                type="button"
+                (click)="alternarDestacada(actividad.id)"
+              >
+                {{ actividad.destacada ? 'Quitar destacada' : 'Destacar' }}
+              </button>
+
+              <button
+                type="button"
+                (click)="avanzarEstado(actividad.id)"
+                [disabled]="actividad.estado === 'completada'"
+              >
+                Avanzar estado
+              </button>
+
+              <button
+                type="button"
+                (click)="eliminar(actividad.id)"
+              >
+                Eliminar
+              </button>
+            </div>
+          </article>
+        </li>
+      } @empty {
+        <li class="vacio">
+          No se encontraron actividades.
+        </li>
+      }
+    </ul>
+  </section>
+
+  <section aria-labelledby="titulo-seleccionada">
+    <h3 id="titulo-seleccionada">Actividad seleccionada</h3>
+
+    @if (actividadSeleccionada(); as actividad) {
+      <p><strong>{{ actividad.titulo }}</strong></p>
+      <p>Estado: {{ actividad.estado }}</p>
+      <p>Prioridad: {{ actividad.prioridad }}</p>
+    } @else {
+      <p>Selecciona una actividad para ver sus detalles.</p>
+    }
+  </section>
+</section>

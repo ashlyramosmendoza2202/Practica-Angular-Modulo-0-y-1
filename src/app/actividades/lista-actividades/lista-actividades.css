@@ -1,0 +1,23 @@
+:host {
+  display: block;
+  margin-top: 2rem;
+}
+
+.lista {
+  display: grid;
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.lista li {
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.lista p,
+.lista h3 {
+  margin: 5px 0;
+}

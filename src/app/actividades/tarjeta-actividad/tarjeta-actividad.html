@@ -1,0 +1,27 @@
+<section class="tarjeta" [class.prioridad-alta]="prioridad === 'alta'">
+  <h2>{{ titulo }}</h2>
+
+  <p>Estado: {{ estado }}</p>
+
+  <div class="barra">
+    <span [style.width.%]="porcentaje"></span>
+  </div>
+
+  <p>{{ porcentaje }}% completado</p>
+
+  @if (detallesVisibles) {
+    <p>{{ descripcion }}</p>
+  } @else {
+    <p>Los detalles están ocultos.</p>
+  }
+
+  <button (click)="alternarDetalles()">
+    {{ detallesVisibles ? 'Ocultar detalles' : 'Mostrar detalles' }}
+  </button>
+
+  <button
+    [disabled]="estado === 'completada'"
+    (click)="avanzarEstado()">
+    Avanzar estado
+  </button>
+</section>

@@ -1,0 +1,31 @@
+:host {
+  display: block;
+  margin-top: 2rem;
+}
+
+.tarjeta {
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-left: 4px solid #b91c1c;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.barra {
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.barra span {
+  display: block;
+  height: 100%;
+  background: #2563eb;
+}
+
+button {
+  padding: 8px 12px;
+  margin: 4px;
+  cursor: pointer;
+}

@@ -1,0 +1,20 @@
+<section>
+  <h2>Actividades recientes</h2>
+  <p>{{ actividades.length }} en la vista</p>
+
+  <ul class="lista">
+    @for (actividad of actividades; track actividad.id; let posicion = $index) {
+      <li>
+        <p>Actividad {{ posicion + 1 }}</p>
+        <h3>{{ actividad.titulo }}</h3>
+        <p>Creada el {{ actividad.creadaEn | date:'d MMM y' }}</p>
+        <span>{{ actividad.prioridad | titlecase }}</span>
+      </li>
+    } @empty {
+      <li>
+        <h3>No hay actividades</h3>
+        <p>Crea una actividad cuando estés listo para comenzar.</p>
+      </li>
+    }
+  </ul>
+</section>
